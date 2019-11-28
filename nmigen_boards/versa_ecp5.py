@@ -6,16 +6,16 @@ from nmigen.vendor.lattice_ecp5 import *
 from .resources import *
 
 
-__all__ = ["VersaECP5Platform"]
+__all__ = ["VersaECP5Platform", "VersaECP5Platform_USRMCLK"]
 
 
-class VersaECP5Platform(LatticeECP5Platform):
+class _VersaECP5PlatformBase(LatticeECP5Platform):
     device      = "LFE5UM-45F"
     package     = "BG381"
     speed       = "8"
     default_clk = "clk100"
     default_rst = "rst"
-    resources   = [
+    _resources   = [
         Resource("rst", 0, PinsN("T1", dir="i"), Attrs(IO_TYPE="LVCMOS33")),
         Resource("clk100", 0, DiffPairs("P3", "P4", dir="i"),
                  Clock(100e6), Attrs(IO_TYPE="LVDS")),
@@ -52,11 +52,6 @@ class VersaECP5Platform(LatticeECP5Platform):
         UARTResource(0,
             rx="C11", tx="A11",
             attrs=Attrs(IO_TYPE="LVCMOS33", PULLMODE="UP")
-        ),
-
-        *SPIFlashResources(0,
-            cs="R2", clk="U3", miso="W2", mosi="V2", wp="Y2", hold="W1",
-            attrs=Attrs(IO_STANDARD="LVCMOS33")
         ),
 
         Resource("eth_clk125",     0, Pins("L19", dir="i"),
@@ -169,6 +164,31 @@ class VersaECP5Platform(LatticeECP5Platform):
                 "-f", config_filename,
                 "-c", "transport select jtag; init; svf -quiet {}; exit".format(vector_filename)
             ])
+
+
+class VersaECP5Platform(_VersaECP5PlatformBase):
+    resources = (
+        _VersaECP5PlatformBase._resources +
+        [
+            *SPIFlashResources(0,
+                cs="R2", clk="U3", miso="W2", mosi="V2", wp="Y2", hold="W1",
+                attrs=Attrs(IO_STANDARD="LVCMOS33")
+            )
+        ]
+    )
+
+
+class VersaECP5Platform_USRMCLK(_VersaECP5PlatformBase):
+    resources = (
+        _VersaECP5PlatformBase._resources + 
+        [
+            # Note: after requesting from this platform, user should assign its clk
+            *SPIFlashResources(0,
+                cs="R2", clk="user_clk", miso="W2", mosi="V2", wp="Y2", hold="W1",
+                attrs=Attrs(IO_STANDARD="LVCMOS33")
+            )
+        ]
+    )
 
 
 if __name__ == "__main__":
