@@ -171,7 +171,7 @@ class VersaECP5Platform(_VersaECP5PlatformBase):
         _VersaECP5PlatformBase._resources +
         [
             *SPIFlashResources(0,
-                cs="R2", clk="U3", miso="W2", mosi="V2", wp="Y2", hold="W1",
+                cs="R2", clk="U3", miso="V2", mosi="W2", wp="Y2", hold="W1",
                 attrs=Attrs(IO_STANDARD="LVCMOS33")
             )
         ]
@@ -184,7 +184,7 @@ class VersaECP5Platform_USRMCLK(_VersaECP5PlatformBase):
         [
             # Note: after requesting from this platform, user should assign its clk
             *SPIFlashResources(0,
-                cs="R2", clk="user_clk", miso="W2", mosi="V2", wp="Y2", hold="W1",
+                cs="R2", clk="user_clk", miso="V2", mosi="W2", wp="Y2", hold="W1",
                 attrs=Attrs(IO_STANDARD="LVCMOS33")
             )
         ]
