@@ -87,10 +87,10 @@ class _VersaECP5PlatformBase(LatticeECP5Platform):
             Subsignal("mdc",     Pins("G19", dir="o")),
             Subsignal("mdio",    Pins("H20", dir="io")),
             Subsignal("tx_clk",  Pins("C20", dir="o")),
-            Subsignal("tx_ctrl", Pins("E19", dir="o")),
+            Subsignal("tx_ctl",  Pins("E19", dir="o")),
             Subsignal("tx_data", Pins("J17 J16 D19 D20", dir="o")),
             Subsignal("rx_clk",  Pins("J19", dir="i")),
-            Subsignal("rx_ctrl", Pins("F19", dir="i")),
+            Subsignal("rx_ctl",  Pins("F19", dir="i")),
             Subsignal("rx_data", Pins("G18 G16 H18 H17", dir="i")),
             Attrs(IO_TYPE="LVCMOS25")
         ),
