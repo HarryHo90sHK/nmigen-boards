@@ -184,7 +184,7 @@ class VersaECP5Platform_USRMCLK(_VersaECP5PlatformBase):
         [
             # Note: after requesting from this platform, user should assign its clk
             *SPIFlashResources(0,
-                cs="R2", clk="user_clk", miso="V2", mosi="W2", wp="Y2", hold="W1",
+                cs="R2", clk=None, miso="V2", mosi="W2", wp="Y2", hold="W1",
                 attrs=Attrs(IO_STANDARD="LVCMOS33")
             )
         ]

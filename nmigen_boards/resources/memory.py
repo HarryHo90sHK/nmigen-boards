@@ -17,7 +17,7 @@ def SPIFlashResources(*args, cs, clk, mosi, miso, wp=None, hold=None,
     io_all.append(Subsignal("cs",  PinsN(cs, dir="o", conn=conn)))
     # Only append a Subsignal if no user clock is to be used as the SPI clock
     # The user of user clock is indicated by `clk="user_clk"`
-    if clk != "user_clk":
+    if clk is not None:
         io_all.append(Subsignal("clk", Pins(clk, dir="o", conn=conn, assert_width=1)))
 
     io_1x = list(io_all)
